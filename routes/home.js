@@ -8,10 +8,15 @@ const VoiceResponse = require('twilio').twiml.VoiceResponse;
 module.exports=(app)=>{
    app.get("/home",async (req,res)=>{
       if(req.session.email!==undefined){
+<<<<<<< HEAD
          
          res.render("home",{email:req.session.email,number:null})
 
 
+=======
+         // res.render("home",{email:req.session.email})
+         res.render("user",{email:req.session.email})
+>>>>>>> aaca1d60396e231edc38438898ffef4fcd4504e4
       }else{
          res.redirect("/login")
       }

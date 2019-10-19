@@ -11,7 +11,10 @@ const Number =require("./models/Numbers");
 const login=require("./routes/login");
 const home=require("./routes/home");
 const app=express();
-mongoose.connect('mongodb://nmsc:nmsc123@ds153841.mlab.com:53841/nmsc', {useNewUrlParser: true});
+mongoose.connect('mongodb://nmsc:nmsc123@ds153841.mlab.com:53841/nmsc', {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+});
 
 app.set('view engine','ejs');
 app.use(session({
