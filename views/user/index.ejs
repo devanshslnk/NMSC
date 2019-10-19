@@ -1,0 +1,27 @@
+<% include ../partials/header %>
+
+<title>
+	<%= email %>
+</title>
+
+<div style="margin-top: 10vh;">
+	<h1 style="text-align : center;">
+		Get a number!
+	</h1>
+	<hr />
+	<form method="POST" action="/login">
+		<div class="form-group" >
+			<label for="email">Days for Registration *</label>
+			<input type="number" class="form-control" id="days" name="days" aria-describedby="dayHelp" placeholder="Enter total no. of days no. is valied for:" required max="5">
+		</div>
+		<div class="form-group">
+			<label for="purpose">Purpose *</label>
+			<input type="text" class="form-control" id="purpose" name="purpose" placeholder="Enter Purpose" required >
+		</div>
+		<hr />
+		<button type="submit" class="btn btn-primary btn-round">Generate Hidden Number</button>
+	</form>
+	<small id="starHelp" class="form-text text-muted">* -> Required fields!</small>
+</div>
+
+<% include ../partials/footer %>
