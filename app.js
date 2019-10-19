@@ -6,6 +6,8 @@ const mongoose=require('mongoose');
 const multer = require("multer");
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 
+const User =require("./models/User")
+const Number =require("./models/Numbers");
 const login=require("./routes/login");
 const home=require("./routes/home");
 const app=express();
@@ -29,8 +31,24 @@ app.use(bparser.json());
 app.use(multer({dest : "./uploads"}).any());
 
 
-app.get("/test",(req,res)=>{
-   res.send("Working");
+app.get("/test",async (req,res)=>{
+   // const number =new Number({
+   //    number:"+12054311381",
+   //    assign:0
+   // })
+   // number.save()
+   const currentDate=new Date();
+   const intermediate="+12054311381"
+
+   const checkUser= await User.findOne({email:req.session.email,'numbers.number':'+12054311381'});
+   console.log(checkUser);
+
+
+   for(var index in checkUser.numbers){
+      // const checkUser= await User.findOne({email:req.session.email,'numbers.number':intermediate});
+   }
+
+
 });
 
 login(app);
@@ -38,20 +56,4 @@ home(app);
 app.listen(3000);
 
 
-  
-app.post('/twilio/callback', (req,res) => {
-	const twiml = new VoiceResponse();
-
-	// twiml.dial('8850 392 965');
-
-	const dial = twiml.dial({
-		callerId: '+918850285032'
-	});
-	dial.number('+918850285032');
-
-	// twiml.say("Good bye!!");
-
-    res.writeHead(201, { 'Content-Type': 'text/xml' });
-    res.end(twiml.toString());
-})
 

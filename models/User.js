@@ -5,7 +5,10 @@ const User = new mongoose.Schema({
 	phno: {type:String, trim:true, defualt:''},
 	email: {type:String, trim:true, defualt:''},
    password: {type:String, trim:true, defualt:''},
-   numbers:[{type:String, trim:true, defualt:''}]
+   numbers:[
+      {type:String, trim:true, defualt:''}
+
+   ]
 })
 
 module.exports = mongoose.model('User',User);

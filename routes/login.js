@@ -56,7 +56,8 @@ module.exports=(app)=>{
          name:name,
          email:email,
          password:password,
-         phno:phoneNumber
+         phno:phoneNumber,
+         number:[]
       });
 
       const user =await User.findOne({email:email})
