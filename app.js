@@ -1,9 +1,10 @@
 const express=require("express");
-<<<<<<< HEAD
 const bparser=require("body-parser");
 const session=require("express-session");
 const mongoStore=require("connect-mongo")(session);
 const mongoose=require('mongoose');
+const multer = require("multer");
+const VoiceResponse = require('twilio').twiml.VoiceResponse;
 
 const login=require("./routes/login");
 const home=require("./routes/home");
@@ -25,6 +26,7 @@ app.use(session({
 app.use(express.static('./public'));
 app.use(bparser.urlencoded({extended:true}));
 app.use(bparser.json());
+app.use(multer({dest : "./uploads"}).any());
 
 
 app.get("/test",(req,res)=>{
@@ -34,16 +36,8 @@ app.get("/test",(req,res)=>{
 login(app);
 home(app);
 app.listen(3000);
-=======
-const app=express();
-const multer = require("multer");
-const VoiceResponse = require('twilio').twiml.VoiceResponse;
 
 
-app.use(express.static(__dirname + "/public/"));
-app.use(express.json());
-app.use(express.urlencoded({extended : true}));
-app.use(multer({dest : "./uploads"}).any());
   
 app.post('/twilio/callback', (req,res) => {
 	const twiml = new VoiceResponse();
@@ -61,5 +55,3 @@ app.post('/twilio/callback', (req,res) => {
     res.end(twiml.toString());
 })
 
-app.listen(3000,(err)=>err?console.error(err):null);
->>>>>>> c9f8f962da42a243a116d4bbe244f2d0f9cd990a
