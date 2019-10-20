@@ -6,7 +6,7 @@ module.exports=(app)=>{
       if(req.session.email!==undefined)
       {
          console.log("Received at the wrong end")
-         res.redirect("/");
+         res.redirect("/home");
       }else{
          res.render("user/login",{email : null});
       }
@@ -83,6 +83,7 @@ module.exports=(app)=>{
          if(err)
             console.log(err);
          });
+         req.session = null;
          res.redirect("/login")
       });
 }
