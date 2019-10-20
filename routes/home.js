@@ -5,18 +5,38 @@ const multer = require("multer");
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 const twilio=require("twilio").twiml;
 
+
+const availableChars = '0123456789';
+const generated = [];
+const randomInt = (len) => {
+    let newOTP = '';
+    for(let i = 0; i < len; i++) {
+        newOTP = newOTP.concat(availableChars[parseInt(Math.random()*availableChars.length)]);
+    };
+    newOTP = parseInt(newOTP);
+    if(generated.includes(newOTP) && generated.length < 100){
+        return randomInt(len);
+    } else if(generated.length >= 100){
+       generated = [];
+    }
+    generated.push(newOTP);
+    return newOTP;
+};
+
 module.exports=(app)=>{
    app.get("/home",async (req,res)=>{
       if(req.session.email!==undefined){
          const currentUser=await User.findOne({email:req.session.email})
          const assignedNumbers=await Number.find({currentNumber:currentUser.phno})
          const tableContents=[]
+         // console.log(assignedNumbers)
          for(var index in assignedNumbers){
             var row={
                number:assignedNumbers[index].number,
                purpose:assignedNumbers[index].purpose,
                expiry:assignedNumbers[index].timestamp
             }
+            
             tableContents.push(row)
          }
          
@@ -33,12 +53,13 @@ module.exports=(app)=>{
       const days=parseInt(req.body.days);
       const currentDate=new Date()
       currentDate.setDate(currentDate.getDate() + days);
-    
+      const otp=randomInt(4).toString()
+   
       const numberObject=await Number.findOne({$or:[{assign:1},{timestamp:{$lt:new Date()}}]});
    
       const appendNumber=await User.findOneAndUpdate({email:req.session.email},{$push:{numbers:numberObject.number}});
 
-      const updatedObject=await Number.findOneAndUpdate({number:numberObject.number},{assign:1,currentNumber:appendNumber.phno,otp:"",timestamp:currentDate})
+      const updatedObject=await Number.findOneAndUpdate({number:numberObject.number},{assign:1,currentNumber:appendNumber.phno,otp:otp,timestamp:currentDate})
       
       res.render("user/index",{email:req.session.email,number:numberObject.number,tableContents:[]});
       
