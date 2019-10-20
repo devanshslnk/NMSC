@@ -26,10 +26,10 @@ app.use(session({
     saveUninitialized: false,
     store:new mongoStore({
         url:'mongodb://nmsc:nmsc123@ds153841.mlab.com:53841/nmsc',
-        autoRemove:false
+        autoRemove:false,
     })
-
 }));
+
 app.use(express.static('./public'));
 app.use(bparser.urlencoded({extended:true}));
 app.use(bparser.json());
