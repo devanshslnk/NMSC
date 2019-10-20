@@ -18,9 +18,8 @@ module.exports=(app)=>{
       // const email=req.body.email;
       // const password=req.body.password;
       const {email, password} = req.body;
-      console.log(req.body);
+
       const user= await User.findOne({email:email, password : password});
-      console.log(user);
       if( user === null ){
          res.render("user/login",{message:"user does not exits"});
       } else {
@@ -70,7 +69,7 @@ module.exports=(app)=>{
                req.session.password=password;
                res.redirect("/login")
             }else{
-               res.render("signup",{message:"User already exits"});
+               res.render("user/new",{message:"User already exits"});
          }
       }
 });

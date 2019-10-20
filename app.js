@@ -5,6 +5,7 @@ const mongoStore=require("connect-mongo")(session);
 const mongoose=require('mongoose');
 const multer = require("multer");
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
+// const schedule=require("node-schedule");
 
 const User =require("./models/User")
 const Number =require("./models/Numbers");
@@ -15,6 +16,7 @@ mongoose.connect('mongodb://nmsc:nmsc123@ds153841.mlab.com:53841/nmsc', {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 });
+
 
 app.set('view engine','ejs');
 app.use(session({
@@ -33,6 +35,11 @@ app.use(bparser.urlencoded({extended:true}));
 app.use(bparser.json());
 app.use(multer({dest : "./uploads"}).any());
 
+
+ 
+// var j = schedule.scheduleJob('* * * * *', function(){
+//    console.log('The answer to life, the universe, and everything!');
+//  });
 
 app.get("/test",async (req,res)=>{
    // const number =new Number({

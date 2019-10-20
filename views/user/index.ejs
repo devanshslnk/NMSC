@@ -3,13 +3,13 @@
 <title>
 	<%= email %>
 </title>
-
+<span><%=email%></span>
 <div style="margin-top: 10vh;">
 	<h1 style="text-align : center;">
 		Get a number!
 	</h1>
 	<hr />
-	<form method="POST" action="/login">
+	<form method="POST">
 		<div class="form-group" >
 			<label for="email">Days for Registration *</label>
 			<input type="number" class="form-control" id="days" name="days" aria-describedby="dayHelp" placeholder="Enter total no. of days no. is valied for:" required max="5">
@@ -22,6 +22,13 @@
 		<button type="submit" class="btn btn-primary btn-round">Generate Hidden Number</button>
 	</form>
 	<small id="starHelp" class="form-text text-muted">* -> Required fields!</small>
+	
+	<!-- Table basic -->
+	<ul>
+	<%for(var number in tableContents){%>
+		<li><%=tableContents[number].purpose%> &nbsp;&nbsp;&nbsp;<%=tableContents[number].number%></li>		
+	<%}%>
+	</ul>
 </div>
 
 <% include ../partials/footer %>

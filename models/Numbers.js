@@ -6,7 +6,7 @@ const numberSchema=new mongoose.Schema({
    otp:{type:String},
    timestamp : { type : Date, default: Date.now },
    currentNumber:{type:String},
-   puspose:{type:String}
+   purpose:{type:String}
 })
 
 module.exports=mongoose.model("Number",numberSchema);

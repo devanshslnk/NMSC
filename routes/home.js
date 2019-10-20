@@ -8,15 +8,20 @@ const VoiceResponse = require('twilio').twiml.VoiceResponse;
 module.exports=(app)=>{
    app.get("/home",async (req,res)=>{
       if(req.session.email!==undefined){
-<<<<<<< HEAD
+         const currentUser=await User.findOne({email:req.session.email})
+         const assignedNumbers=await Number.find({currentNumber:currentUser.phno})
+         const tableContents=[]
+         for(var index in assignedNumbers){
+            var row={
+               number:assignedNumbers[index].number,
+               purpose:assignedNumbers[index].purpose
+            }
+            tableContents.push(row)
+         }
          
-         res.render("home",{email:req.session.email,number:null})
+         res.render("user/index",{email:req.session.email,number:null,tableContents:tableContents})
 
 
-=======
-         // res.render("home",{email:req.session.email})
-         res.render("user",{email:req.session.email})
->>>>>>> aaca1d60396e231edc38438898ffef4fcd4504e4
       }else{
          res.redirect("/login")
       }
@@ -28,13 +33,13 @@ module.exports=(app)=>{
       const currentDate=new Date()
       currentDate.setDate(currentDate.getDate() + days);
     
-      const numberObject=await Number.findOne({assign:0});
-
+      const numberObject=await Number.findOne({$or:[{assign:1},{timestamp:{$lt:new Date()}}]});
+   
       const appendNumber=await User.findOneAndUpdate({email:req.session.email},{$push:{numbers:numberObject.number}});
 
       const updatedObject=await Number.findOneAndUpdate({number:numberObject.number},{assign:1,currentNumber:appendNumber.phno,otp:"",timestamp:currentDate})
       
-      res.render("home",{email:req.session.email,number:numberObject.number});
+      res.render("user/index",{email:req.session.email,number:numberObject.number});
       
    });
 
