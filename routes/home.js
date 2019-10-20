@@ -3,7 +3,7 @@ const Number =require("../models/Numbers");
 const User=require("../models/User");
 const multer = require("multer");
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
-
+const twilio=require("twilio").twiml;
 
 module.exports=(app)=>{
    app.get("/home",async (req,res)=>{
@@ -43,30 +43,54 @@ module.exports=(app)=>{
       
    });
 
-      
+   app.get("/hit",async(req,res)=>{
+      console.log("hit")
+      console.log(req.query.Digits);
+
+   });
    app.post('/twilio/callback/:number',async (req,res) => {
       const intermediate="+"+req.params.number;
       const checkAssign=await Number.findOne({number:intermediate})
-      console.log(req.body)
       const twiml = new VoiceResponse();
-
+      
       if(checkAssign!=null){
          const currentDate=new Date();
          if(checkAssign.timestamp>currentDate){
             
-            console.log(checkAssign)
-            const dial = twiml.dial({
-               // callerId: '+918850392965'
-               callerId:intermediate
-               // callerId:'+918850285032'
-            });
+            // console.log(checkAssign)
+            // twiml.gather({ numDigits: 4 }, gatherNode => {
+            //    // gatherNode.say('For sales, press 1. For support, press 2.');
+            //    console.log(gatherNode);
+            //  });
+            if(req.body.Digits===undefined){
+               const gather=twiml.gather({
+                  action:"/twilio/callback/"+req.params.number,
+                  
+               })
+               gather.say("enter number");
 
+            }
+            else if(req.body.Digits!==undefined){
+               const otp=req.body.Digits.toString();
+               const assignedNumber=await Number.findOne({number:intermediate,otp:otp});
+               if(assignedNumber!=null){
+               const dial = twiml.dial({
+                  // callerId: '+918850392965'
+                  callerId:intermediate
+                  // callerId:'+918850285032'
+               });
+
+               dial.number('+91'+checkAssign.currentNumber);
+
+               res.writeHead(201, { 'Content-Type': 'text/xml' });
+               res.end(twiml.toString());
+               return 
+            }
+            }            
             
-            dial.number('+91'+checkAssign.currentNumber);
-
             res.writeHead(201, { 'Content-Type': 'text/xml' });
             res.end(twiml.toString());
-            return 
+
          
          }
       
