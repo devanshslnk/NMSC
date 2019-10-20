@@ -5,7 +5,6 @@ const multer = require("multer");
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 const twilio=require("twilio").twiml;
 
-
 const availableChars = '0123456789';
 const generated = [];
 const randomInt = (len) => {
@@ -23,6 +22,10 @@ const randomInt = (len) => {
     return newOTP;
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b5928d806590cd829643840cc0ac4334fe8aa25d
 module.exports=(app)=>{
    app.get("/home",async (req,res)=>{
       if(req.session.email!==undefined){
@@ -70,6 +73,7 @@ module.exports=(app)=>{
       console.log(req.query.Digits);
 
    });
+
    app.post('/twilio/callback/:number',async (req,res) => {
       const intermediate="+"+req.params.number;
       const checkAssign=await Number.findOne({number:intermediate})
