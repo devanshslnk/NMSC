@@ -6,7 +6,7 @@ const mongoose=require('mongoose');
 const multer = require("multer");
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 // const schedule=require("node-schedule");
-const cron =require("node-cron")
+const cron =require("node-cron");
 
 const User =require("./models/User")
 const Number =require("./models/Numbers");
@@ -27,10 +27,10 @@ app.use(session({
     saveUninitialized: false,
     store:new mongoStore({
         url:'mongodb://nmsc:nmsc123@ds153841.mlab.com:53841/nmsc',
-        autoRemove:false
+        autoRemove:false,
     })
-
 }));
+
 app.use(express.static('./public'));
 app.use(bparser.urlencoded({extended:true}));
 app.use(bparser.json());
@@ -56,16 +56,18 @@ app.get("/test",async (req,res)=>{
    //    assign:0
    // })
    // number.save()
-   const currentDate=new Date();
-   const intermediate="+12054311381"
+//    const currentDate=new Date();
+//    const intermediate="+12054311381"
 
-   const checkUser= await User.findOne({email:req.session.email,'numbers.number':'+12054311381'});
-   console.log(checkUser);
+//    const checkUser= await User.findOne({email:req.session.email,'numbers.number':'+12054311381'});
+//    console.log(checkUser);
 
 
-   for(var index in checkUser.numbers){
-      // const checkUser= await User.findOne({email:req.session.email,'numbers.number':intermediate});
-   }
+//    for(var index in checkUser.numbers){
+//       // const checkUser= await User.findOne({email:req.session.email,'numbers.number':intermediate});
+//    }
+
+    res.status(200).send("Testing!!");
 
 
 });

@@ -14,12 +14,13 @@ module.exports=(app)=>{
          for(var index in assignedNumbers){
             var row={
                number:assignedNumbers[index].number,
-               purpose:assignedNumbers[index].purpose
+               purpose:assignedNumbers[index].purpose,
+               expiry:assignedNumbers[index].timestamp
             }
             tableContents.push(row)
          }
          
-         res.render("user/index",{email:req.session.email,number:null,tableContents:tableContents})
+         res.render("user/index",{email:req.session.email,tableContents:tableContents})
 
 
       }else{
@@ -28,7 +29,7 @@ module.exports=(app)=>{
    })
 
    app.post("/home",async (req,res)=>{
-      const purpose=req.body.purpose;
+      const purpose = req.body.purpose;
       const days=parseInt(req.body.days);
       const currentDate=new Date()
       currentDate.setDate(currentDate.getDate() + days);

@@ -1,34 +1,86 @@
 <% include ../partials/header %>
 
 <title>
-	<%= email %>
+	NMSC - <%= email %>
 </title>
-<span><%=email%></span>
+<!-- <span><%=email%></span> -->
 <div style="margin-top: 10vh;">
-	<h1 style="text-align : center;">
-		Get a number!
-	</h1>
-	<hr />
-	<form method="POST">
-		<div class="form-group" >
-			<label for="email">Days for Registration *</label>
-			<input type="number" class="form-control" id="days" name="days" aria-describedby="dayHelp" placeholder="Enter total no. of days no. is valied for:" required max="5">
-		</div>
-		<div class="form-group">
-			<label for="purpose">Purpose *</label>
-			<input type="text" class="form-control" id="purpose" name="purpose" placeholder="Enter Purpose" required >
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 style="text-align : center;">
+					Get a number!
+				</h1>
+			</div>
 		</div>
 		<hr />
-		<button type="submit" class="btn btn-primary btn-round">Generate Hidden Number</button>
-	</form>
-	<small id="starHelp" class="form-text text-muted">* -> Required fields!</small>
-	
-	<!-- Table basic -->
-	<ul>
-	<%for(var number in tableContents){%>
-		<li><%=tableContents[number].purpose%> &nbsp;&nbsp;&nbsp;<%=tableContents[number].number%></li>		
-	<%}%>
-	</ul>
+		<form method="POST" >
+			<div class="form-group row" >
+				<label for="email" class="col-md-4 col-sm-12">Days for Registration *</label>
+				<input type="number" class="form-control col-md-8 col-sm-12" id="days" name="days" aria-describedby="dayHelp" placeholder="Enter total no. of days no. is valied for:" required max="5">
+			</div>
+			<div class="form-group row">
+				<label for="purpose" class="col-md-4 col-sm-12">Purpose *</label>
+				<input type="text" class="form-control col-md-8 col-sm-12" id="purpose" name="purpose" placeholder="Enter Purpose" required >
+			</div>
+			<hr />
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4"></div>
+				<div class="col-md-4 col-sm-12">
+					<button type="submit" class="btn btn-primary btn-round" style="width: 100%;">Generate Hidden Number</button>
+				</div>
+			</div>
+		</form>
+		<small id="starHelp" class="form-text text-muted">* -> Required fields!</small>
+	</div>
+
+	<section class="section section-lg" style="padding-top : 1% !important;padding-bottom: 1%!important;">
+		<div class="col-md-12">
+		  <div class="card card-plain">
+			<div class="card-header">
+			  <div class="row">
+				<div class="col-sm-6 text-left">
+				  <hr />
+				  <h5 class="card-category">Logs</h5>
+				  <h2 class="card-title">History</h2>
+				</div>
+			  </div>
+			</div>
+			<div class="card-body">
+			  <% if(tableContents.length === 0) { %>
+				<h1 class="text-center">No logs, please use our service</h1>
+			  <% }else { %>
+				  <% let i = 1 %>
+				  <div class="table-responsive">
+				  <table id="dtBasicExample" class="table table-sorter">
+					  <thead>
+						<tr>
+						  <th class="th-sm">#</th>
+						  <th class="th-sm">Number</th>
+						  <th class="th-sm">Purpose</th>
+						  <th class="th-sm">Expiry Date</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<% tableContents.forEach(tuple=>{ %>
+							<tr>
+							  <td><%= i++ %></td>
+							  <td><%= tuple.number %></td>
+							  <td><%= tuple.purpose %></td>
+							  <td><%=  tuple.expiry %></td>
+							</tr>
+						<% }); %>
+					</tbody>
+				  </table>
+				</div>                      
+			  <% } %>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	</section>
+
 </div>
 
 <% include ../partials/footer %>
