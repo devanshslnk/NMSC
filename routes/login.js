@@ -5,7 +5,7 @@ module.exports=(app)=>{
    app.get("/login",async (req,res)=>{
       if(req.session.email!==undefined)
       {
-         console.log("Received at the wrong end");
+         console.log("Received at the wrong end")
          res.redirect("/");
       }else{
          res.render("user/login",{email : null});

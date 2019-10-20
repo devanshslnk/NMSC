@@ -40,8 +40,7 @@ module.exports=(app)=>{
 
       const updatedObject=await Number.findOneAndUpdate({number:numberObject.number},{assign:1,currentNumber:appendNumber.phno,otp:"",timestamp:currentDate})
       
-      // res.render("user/index",{email:req.session.email,number:numberObject.number});
-      res.redirect("/home");
+      res.render("user/index",{email:req.session.email,number:numberObject.number,tableContents:[]});
       
    });
 
@@ -49,18 +48,21 @@ module.exports=(app)=>{
    app.post('/twilio/callback/:number',async (req,res) => {
       const intermediate="+"+req.params.number;
       const checkAssign=await Number.findOne({number:intermediate})
- 
+      console.log(req.body)
       const twiml = new VoiceResponse();
 
       if(checkAssign!=null){
          const currentDate=new Date();
-         console.log(checkAssign)
          if(checkAssign.timestamp>currentDate){
-
+            
+            console.log(checkAssign)
             const dial = twiml.dial({
-               callerId: '+918850392965'
+               // callerId: '+918850392965'
+               callerId:intermediate
                // callerId:'+918850285032'
             });
+
+            
             dial.number('+91'+checkAssign.currentNumber);
 
             res.writeHead(201, { 'Content-Type': 'text/xml' });
@@ -72,10 +74,10 @@ module.exports=(app)=>{
       
       }else{
 
-      twiml.say("Good bye!!");
+         twiml.say("Good bye!!");
 
-      res.writeHead(201, { 'Content-Type': 'text/xml' });
-      res.end(twiml.toString());
+         res.writeHead(201, { 'Content-Type': 'text/xml' });
+         res.end(twiml.toString());
    
       }
 
