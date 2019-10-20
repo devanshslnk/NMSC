@@ -22,10 +22,6 @@ const randomInt = (len) => {
     return newOTP;
 };
 
-<<<<<<< HEAD
-=======
-
->>>>>>> b5928d806590cd829643840cc0ac4334fe8aa25d
 module.exports=(app)=>{
    app.get("/home",async (req,res)=>{
       if(req.session.email!==undefined){
