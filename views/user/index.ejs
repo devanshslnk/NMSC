@@ -5,43 +5,65 @@
 </title>
 <!-- <span><%=email%></span> -->
 <div style="margin-top: 10vh;" >
-	<div class="col-md-12">
-		<div class="row">
-			<div class="col-md-12">
-				<h1 class="header__heading">
-					Get a number!
-				</h1>
-			</div>
-		</div>
-		<hr />
-		<form method="POST" >
-			<div class="form-group row" >
-				<label for="email" class="col-md-4 col-sm-12">Days for Registration *</label>
-				<input type="number" class="form-control col-md-8 col-sm-12" id="days" name="days" aria-describedby="dayHelp" placeholder="Enter total no. of days no. is valied for:" required max="5">
-			</div>
-			<div class="form-group row">
-				<label for="purpose" class="col-md-4 col-sm-12">Purpose *</label>
-				<input type="text" class="form-control col-md-8 col-sm-12" id="purpose" name="purpose" placeholder="Enter Purpose" required >
-			</div>
-			<hr />
-			<div class="row">
-				<div class="col-md-4"></div>
-				<div class="col-md-4"></div>
-				<div class="col-md-4 col-sm-12">
-					<button type="submit" class="btn btn-primary btn-round header__button" >Generate Hidden Number</button>
+
+	<% if(otp){ %>
+		<div class="col-md-12">
+			<h1 class="header__heading">
+				<div class="row">
+					<div class="col-md-4">
+						OTP
+					</div>
+					<div class="col-md-8">
+						<button disabled="disabled btn btn-primary btn-round header__button"><%= otp %></button>
+					</div>
 				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-4">
+						Number
+					</div>
+					<div class="col-md-8">
+						<button disabled="disabled btn btn-primary btn-round header__button"><%= tableContents[0].number %></button> 
+					</div>
+					<small id="starHelp" class="form-text text-muted col-md-12">Valid till <%= tableContents[0].expiry %></small>
+				</div>
+			</h1>
+		</div>
+	<% } else { %>
+		<div class="col-md-12">
+				<div class="row">
+					
+				</div>
+				<hr />
+				<form method="POST" >
+					<div class="form-group row" >
+						<label for="email" class="col-md-4 col-sm-12">Days for Registration *</label>
+						<input type="number" class="form-control col-md-8 col-sm-12" id="days" name="days" aria-describedby="dayHelp" placeholder="Enter total no. of days no. is valied for:" required max="5">
+					</div>
+					<div class="form-group row">
+						<label for="purpose" class="col-md-4 col-sm-12">Purpose *</label>
+						<input type="text" class="form-control col-md-8 col-sm-12" id="purpose" name="purpose" placeholder="Enter Purpose" required >
+					</div>
+					<hr />
+					<div class="row">
+						<div class="col-md-4"></div>
+						<div class="col-md-4"></div>
+						<div class="col-md-4 col-sm-12">
+							<button type="submit" class="btn btn-primary btn-round header__button" >Generate Hidden Number</button>
+						</div>
+					</div>
+				</form>
+				<small id="starHelp" class="form-text text-muted">* -> Required fields!</small>
 			</div>
-		</form>
-		<small id="starHelp" class="form-text text-muted">* -> Required fields!</small>
-	</div>
+	<% } %>
 
 	<section class="section section-lg" style="padding-top : 1% !important;padding-bottom: 1%!important;">
 		<div class="col-md-12">
 		  <div class="card card-plain">
 			<div class="card-header">
+					<hr />
 			  <div class="row">
 				<div class="col-sm-6 text-left">
-				  <hr />
 				  <h5 class="card-category">Logs</h5>
 				  <h2 class="card-title">History</h2>
 				</div>

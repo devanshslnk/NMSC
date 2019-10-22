@@ -50,6 +50,10 @@ app.use(multer({dest : "./uploads"}).any());
 
 // task.start()
 
+app.get("/",(req,res)=>{
+    res.redirect("/home");
+})
+
 app.get("/test",async (req,res)=>{
    // const number =new Number({
    //    number:"+12054311381",

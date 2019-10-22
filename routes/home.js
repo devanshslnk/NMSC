@@ -38,9 +38,14 @@ module.exports=(app)=>{
             
             tableContents.push(row)
          }
-         
-         res.render("user/index",{email:req.session.email,tableContents:tableContents})
 
+         if(req.session.otp && req.session.otp !== 0){
+            let otp = req.session.otp;
+            req.session.otp = 0;
+            res.render("user/index",{email:req.session.email,tableContents:tableContents , otp});
+         } else {
+            res.render("user/index",{email:req.session.email,tableContents:tableContents, otp : null});
+         }
 
       }else{
          res.redirect("/login")
@@ -58,9 +63,11 @@ module.exports=(app)=>{
    
       const appendNumber=await User.findOneAndUpdate({email:req.session.email},{$push:{numbers:numberObject.number}});
 
-      const updatedObject=await Number.findOneAndUpdate({number:numberObject.number},{assign:1,currentNumber:appendNumber.phno,otp:otp,timestamp:currentDate})
+      const updatedObject=await Number.findOneAndUpdate({number:numberObject.number},{assign:1,currentNumber:appendNumber.phno,otp:otp,timestamp:currentDate,purpose : purpose})
       
-      res.render("user/index",{email:req.session.email,number:numberObject.number,tableContents:[]});
+      // res.render("user/index",{email:req.session.email,number:numberObject.number,tableContents:[]});
+      req.session.otp = otp;
+      res.redirect("/home");
       
    });
 
