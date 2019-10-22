@@ -39,7 +39,7 @@ module.exports=(app)=>{
             tableContents.push(row)
          }
          
-         res.render("user/index",{email:req.session.email,tableContents:tableContents})
+         res.render("user/index",{email:req.session.email,tableContents:tableContents,otp:""})
 
 
       }else{
@@ -60,7 +60,7 @@ module.exports=(app)=>{
 
       const updatedObject=await Number.findOneAndUpdate({number:numberObject.number},{assign:1,currentNumber:appendNumber.phno,otp:otp,timestamp:currentDate})
       
-      res.render("user/index",{email:req.session.email,number:numberObject.number,tableContents:[]});
+      res.render("user/index",{email:req.session.email,number:numberObject.number,tableContents:[],otp:otp});
       
    });
 
