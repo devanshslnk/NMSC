@@ -13,3 +13,30 @@ body {
 	height: 100%;
 }
 
+.header {
+	width: 50%;
+	margin-left: 25%;
+	/* margin-top: 10%; */
+	font-weight: 500;
+	font-size: 1.2rem;
+	height: 50%!important;
+}
+
+.header__heading {
+	text-align : center;
+	font-weight: 500!important;
+	text-shadow: -4px 4px 15px #999;
+}
+
+.header__button {
+	width : 100%;
+	box-shadow: 5px 5px 10px -1px #F0794F;
+}
+
+.header__button:hover {
+	box-shadow: 5px 5px 10px 1px #F0794F;
+}
+
+.navbar {
+	font-size: 1.2rem;
+}
